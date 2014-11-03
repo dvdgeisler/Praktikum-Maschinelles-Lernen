@@ -1,0 +1,121 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8x]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{ucs}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{array}
+\usepackage[normalem]{ulem}
+\usepackage{arydshln}
+\usepackage{ulem}
+\usepackage{wasysym}
+\usepackage{pdflscape}
+\usepackage{transparent}
+\usepackage{mathtools}
+\usepackage{pbox}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usepackage{fancybox}
+\usepackage{cancel}
+
+\usetikzlibrary{positioning,shadows,arrows,automata}
+
+\definecolor{orange}{rgb}{0.7,0.3,0}
+
+
+% write18 must be enabled: use --shell-escape in the command line
+
+\newcommand{\executeiffilenewer}[3]{%
+\ifnum\pdfstrcmp{\pdffilemoddate{#1}}%
+{\pdffilemoddate{#2}}>0%
+{\immediate\write18{#3}}\fi%
+}
+\newcommand{\includesvg}[1]{%
+\executeiffilenewer{#1.svg}{#1.pdf}%
+{inkscape -z -D --file=#1.svg %
+--export-pdf=#1.pdf --export-latex}%
+\input{#1.pdf_tex}%
+}
+
+\addtolength{\voffset}{-2.5cm}
+\addtolength{\textheight}{5cm}
+\addtolength{\hoffset}{-2.5cm}
+\addtolength{\textwidth}{3.5cm}
+
+%\setlength{\droptitle}{0cm}
+
+\begin{document}
+
+\begin{center}
+\begin{tabular*}{1\linewidth}{l @{\extracolsep{\fill}} r} \hline
+\textsc{Bildverarbeitung, Maschinelles Lernen und Computer Vision -- Projektbeschreibung} & \textsc{} \\
+\textsc{David Geisler, Luis Ibarg\"uen} & \textsc{} \\ \hline
+\end{tabular*}
+\end{center}
+\vspace{3ex}
+
+\newcounter{iListAlph}
+\newenvironment{ListAlph}{\begin{list}{(\alph{iListAlph})}{\usecounter{iListAlph}}}{\end{list}}
+
+\newcounter{iAufgabe}
+\newenvironment{Aufgaben}{\begin{list}{\textbf{SHEET-NUMBER.\arabic{iAufgabe}:}}{\usecounter{iAufgabe}}}{\end{list}}
+\newcommand{\Aufgabe}{\item \nopagebreak[4]~}
+
+\newcounter{iTeilAufgabe}[iAufgabe]
+\newenvironment{TeilAufgaben}[1][(\alph{iTeilAufgabe})]{\begin{list}{#1}{\usecounter{iTeilAufgabe}}}{\end{list}}
+\newcommand{\TeilAufgabe}{\item}
+
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+
+\newcommand{\qq}[1]{\glqq{}#1\grqq{}}
+
+\newcommand{\ol}[1]{\overline{#1}}
+
+\newcommand{\hi}[1]{{\color{orange}#1}}
+
+\newcommand{\N}{\ensuremath{\mathbb{N}}}
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}}
+\newcommand{\Q}{\ensuremath{\mathbb{Q}}}
+\newcommand{\R}{\ensuremath{\mathbb{R}}}
+\newcommand{\C}{\ensuremath{\mathbb{C}}}
+\renewcommand{\O}{\ensuremath{\mathcal{O}}}
+
+\setlength{\parindent}{0pt}
+
+% vgl. http://www.guyrutenberg.com/2008/01/04/add-explanations-to-latex-formula   (2011-10-26)
+\newcommand{\explain}[2]{\underset{\mathclap{\overset{\uparrow}{#2}}}{#1}}
+\newcommand{\explainup}[2]{\overset{\mathclap{\underset{\downarrow}{#2}}}{#1}}
+
+\newcommand{\rg}{\ensuremath{\operatorname{rg}}}
+%\newcommand{\det}{\ensuremath{\operatorname{det}}}
+
+\newcommand{\PMat}[1]{\begin{pmatrix}#1\end{pmatrix}}
+\newcommand{\SmallPMat}[1]{\left(\begin{smallmatrix}#1\end{smallmatrix}\right)}
+
+\newcommand{\ExplainGaussStep}[2]
+{
+  \ensuremath
+  {
+	\overrightarrow{
+	  \phantom{k}
+		\begin{array}{c}
+		  #1
+		\end{array}
+	  \phantom{k}
+	}
+  }
+}
+
+
+\newcommand{\TODO}[1]{{\Large \textbf{TODO: }}\textit{#1}}
+
+
+\input{Kurzbesch.tex}
+
+\end{document}

@@ -1,0 +1,31 @@
+\section*{Beschreibung}
+\subsection*{Allgemein Beschreibung der Anwendung}
+	Das Ziel der Anwendung ist ein basische Kopilot sein. Bei der Video\"uberwachung des Wegs, das Handy detektiert wenn ein Geschwindigkeitswechseln in der Strecke gibt und warn der Fahrer bis das Auto fahrt mit der richtige Geschwindigkeit.
+\subsection*{Kurz Beschreibung des Pipeline}
+	In allgemein k\"onnen wir das Pipeline der Anwendung mit die N\"achste Schritte beschreiben:
+	\begin{itemize}
+		\item Die visuelle Information der Umgebung wird von die Handykamera bekommen.
+		\item Die aktuelle Videoframe wird zuerst alle Rotefarbe filtriert.
+		\item Dieses filtriertes Bild wird bei der Wahl eine Schwelle binarisiert.
+		\item Bei der Benutzung der Hough Algoritmus, man versucht die Position der Kreise zu erkennen.
+		\item In der original Frame und mit der Information der Kreisepositionen man erkennt die "Features" des Bildbereich.
+		\item Mit diese "Features" man entscheidet ob ein Geschwindigkeitschild ist und wenn ja, welche ist die aktuelle Geschwindigkeitsgrenze.
+		\item Mit dem Handy-Information berechnet man die aktuelle Geschwindigkeit und warnt den Fahrer wenn das Auto schneller geht.
+	\end{itemize}
+	\TODO{Pipeline Diagram}
+\subsection*{Vorgeschlagene Algorithmen}
+	\textbf{Hough Transformation}\\
+	Urspr\"unglich erkennt der Method die Geraden auf einen Bild, aber der kann zu kreise  oder andere beliebig Gestalt erweitern.\\ \\
+	
+	\textbf{SURF (Speeded Up Robust Features)}\\
+	Der Method erkennt die "Feature Points" auf dem Bild. Diese punkte sind Orientierung bzw. Eskalierung unver\"anderlich.\\ \\
+	
+	\textbf{Optischer Fluss (Evtl.)}\\
+	Von eine Sequenz von Bildframes, man kann das Geschwindigkeitsvektorfeld berechnen werden.\\ \\
+\subsection*{Vorgeschlagene Arbeitsplan}
+	\begin{itemize}
+		\item \"Uberpr\"ufung des Pipeline bei Matlab Prototypen von jeder Phase.
+		\item Integrierung von alle Prototypen.
+		\item \"Ubersetzung von Matlab-Umgebung zu Android-Umgebung.
+		\item \"Uberpr\"ufung der Endeanwendung.
+	\end{itemize}
