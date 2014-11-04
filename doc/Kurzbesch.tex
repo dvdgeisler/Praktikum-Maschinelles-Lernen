@@ -1,31 +1,49 @@
-\section*{Beschreibung}
-\subsection*{Allgemein Beschreibung der Anwendung}
-	Das Ziel der Anwendung ist ein basische Kopilot sein. Bei der Video\"uberwachung des Wegs, das Handy detektiert wenn ein Geschwindigkeitswechseln in der Strecke gibt und warn der Fahrer bis das Auto fahrt mit der richtige Geschwindigkeit.
-\subsection*{Kurz Beschreibung des Pipeline}
-	In allgemein k\"onnen wir das Pipeline der Anwendung mit die N\"achste Schritte beschreiben:
+\section*{Einleitung}
+    Zu einem modernen Automobil ind heute Assistenzsysteme selbstverständlich. Immer mehr werden dabei auch Assistenten eingesetzt, welche anhand von Kamerabilder, den Fahrer ünterstützen.
+    Neben Rückfahrkameras, Spurhalte- oder Nachtsicht-Assistenten, werden auch vermehrt Assistenten eingesetzt, welche Verkehrszeichen Detektieren und Klassifizieren.
+
+    Eine automatische Verkehrszeichen-Erkennung, kann Fahrern dabei helfen tempolimits einzuhalten, oder verpasste Verkehrszeichen nachzuschauen und kann somit helfen richtige Entscheidungen
+    während des Fahrens zu treffen.
+
+    Im Rahmen eines Praktikums an der Eberhard Karls Universität Tübungen, soll eine automatische Verkehrszeichen-Erkennung für Mobiltelefone entwickelt werden. Dabei sollen insbesondere
+    Methoden der Bildverarbeitung und des Maschinellen lernens eingesetzt werden. Das Praktikum wird von Prof. Schilling und seinem Team, am Lehrstuhl Graphisch Interaktive Systeme am 
+    Wilhelm Schickard Institut für Informatik, betreut
+\section*{Praktikumsprojekt}
+    Im folgenden wird das Projekt kurz beschrieben. Neben den Zielen werden erste Konzepte sowie ein Arbeitsplan vorgestellt.
+\subsection*{Produkt}
+    Ziel des Projekt ist es einen kamerabasierten Fahrassistenten zu entwickeln, welcher sich auf einem Smartphone befindet. Der Fahrassisten soll die Kamera des Smartphones benutzen,
+    um in Fahrtrichtunge Verkehrszeichen zu erkennen. Erkannte Verkehrszeichen sollen dem Fahrer für eine gewisse Zeit angezeigt werden und ihm somit helfen, möglichst wenig Verkehrszeichen zu
+    verpassen.
+
+    Smartphones welche GPS bereitstellen, sollen zusätzlich eine Warnung ausgeben, falls ein erkanntes Tempolimit überschritten wird.
+\subsection*{Umsetzung}
+    \begin{wrapfigure}{r}{0.5\textwidth}
+            \includegraphics[width=0.4\textwidth]{pipeline.pdf}
+            \caption{Pipeline}
+    \end{wrapfigure}
+    Als Smartphone Plattform wird Android eingesetzt. Entsprechend wird die Applikation im wesentlichen in Java entwickelt werden. Android stellt bereits eine Java-Schnittstelle zur Grafik-Library
+    OpenCV. Je nach eingesetztem Smartphone ist es dadurch möglich, einfach und schnell, Bildverarbeitung auf der GPU auszuführen.
+
+\subsubsection*{Pipeline}
+    \begin{itemize}
+        \item Auslesen des Kamerabildes vom Smartphone.
+        \item Extrahieren der relevanten Bildbereiche (Schilder befinden sich i. d. R. rechts der Fahrtrichtung, oder beidseitig).
+        \item Erkennen von Schildern.
+        \item Erkannte Schilder klassifizieren.
+        \item Klassifiziertes Schild anzeigen.
+        \item Ggf. Fahrer akustisch über Geschwindigkeitsübertretung warnen.
+    \end{itemize}
+\subsection*{Algorithmen}
+    \begin{description}
+        \item[Schilderkennung:] Noch in Diskussion. Erste versuche, über Farbkanal und Hough-Transformation
+            Runde (Elliptische) Schilder zu erkennen waren für Schönwetter-Landschafts-Fahrten gut. Scheiterten
+            aber falls das Bild eingetrübt ist (z.B. durch Regen, Dämmerung).
+        \item[Schilder-Klassifizierung:] Neuronale Netze (Trainingsdaten von: \url{http://benchmark.ini.rub.de/index.php?section=home&subsection=news})
+    \end{description}
+\subsection*{Arbeitschritte}
 	\begin{itemize}
-		\item Die visuelle Information der Umgebung wird von die Handykamera bekommen.
-		\item Die aktuelle Videoframe wird zuerst alle Rotefarbe filtriert.
-		\item Dieses filtriertes Bild wird bei der Wahl eine Schwelle binarisiert.
-		\item Bei der Benutzung der Hough Algoritmus, man versucht die Position der Kreise zu erkennen.
-		\item In der original Frame und mit der Information der Kreisepositionen man erkennt die "Features" des Bildbereich.
-		\item Mit diese "Features" man entscheidet ob ein Geschwindigkeitschild ist und wenn ja, welche ist die aktuelle Geschwindigkeitsgrenze.
-		\item Mit dem Handy-Information berechnet man die aktuelle Geschwindigkeit und warnt den Fahrer wenn das Auto schneller geht.
-	\end{itemize}
-	\TODO{Pipeline Diagram}
-\subsection*{Vorgeschlagene Algorithmen}
-	\textbf{Hough Transformation}\\
-	Urspr\"unglich erkennt der Method die Geraden auf einen Bild, aber der kann zu kreise  oder andere beliebig Gestalt erweitern.\\ \\
-	
-	\textbf{SURF (Speeded Up Robust Features)}\\
-	Der Method erkennt die "Feature Points" auf dem Bild. Diese punkte sind Orientierung bzw. Eskalierung unver\"anderlich.\\ \\
-	
-	\textbf{Optischer Fluss (Evtl.)}\\
-	Von eine Sequenz von Bildframes, man kann das Geschwindigkeitsvektorfeld berechnen werden.\\ \\
-\subsection*{Vorgeschlagene Arbeitsplan}
-	\begin{itemize}
-		\item \"Uberpr\"ufung des Pipeline bei Matlab Prototypen von jeder Phase.
-		\item Integrierung von alle Prototypen.
-		\item \"Ubersetzung von Matlab-Umgebung zu Android-Umgebung.
-		\item \"Uberpr\"ufung der Endeanwendung.
+		\item Implementierung der Algorithmen und Training des Neuronalen Netzwerkes in Matlab.
+		\item Implementierung der API in Java (evtl. Abhängigkeit zur OpenCV API).
+		\item Userinterface und Frame-Grabber für Android.
+		\item Test.
 	\end{itemize}
