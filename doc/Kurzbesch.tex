@@ -1,3 +1,4 @@
+\setlength{\parskip}{0.5em}
 \section*{Einleitung}
     Zu einem modernen Automobil ind heute Assistenzsysteme selbstverständlich. Immer mehr werden dabei auch Assistenten eingesetzt, welche anhand von Kamerabilder, den Fahrer ünterstützen.
     Neben Rückfahrkameras, Spurhalte- oder Nachtsicht-Assistenten, werden auch vermehrt Assistenten eingesetzt, welche Verkehrszeichen Detektieren und Klassifizieren.
@@ -5,9 +6,9 @@
     Eine automatische Verkehrszeichen-Erkennung, kann Fahrern dabei helfen tempolimits einzuhalten, oder verpasste Verkehrszeichen nachzuschauen und kann somit helfen richtige Entscheidungen
     während des Fahrens zu treffen.
 
-    Im Rahmen eines Praktikums an der Eberhard Karls Universität Tübungen, soll eine automatische Verkehrszeichen-Erkennung für Mobiltelefone entwickelt werden. Dabei sollen insbesondere
+    Im Rahmen eines Praktikums an der Eberhard Karls Universität Tübingen, soll eine automatische Verkehrszeichen-Erkennung für Mobiltelefone entwickelt werden. Dabei sollen insbesondere
     Methoden der Bildverarbeitung und des Maschinellen lernens eingesetzt werden. Das Praktikum wird von Prof. Schilling und seinem Team, am Lehrstuhl Graphisch Interaktive Systeme am 
-    Wilhelm Schickard Institut für Informatik, betreut
+    Wilhelm Schickard Institut für Informatik, betreut.
 \section*{Praktikumsprojekt}
     Im folgenden wird das Projekt kurz beschrieben. Neben den Zielen werden erste Konzepte sowie ein Arbeitsplan vorgestellt.
 \subsection*{Produkt}
@@ -17,10 +18,6 @@
 
     Smartphones welche GPS bereitstellen, sollen zusätzlich eine Warnung ausgeben, falls ein erkanntes Tempolimit überschritten wird.
 \subsection*{Umsetzung}
-    \begin{wrapfigure}{r}{0.5\textwidth}
-            \includegraphics[width=0.4\textwidth]{pipeline.pdf}
-            \caption{Pipeline}
-    \end{wrapfigure}
     Als Smartphone Plattform wird Android eingesetzt. Entsprechend wird die Applikation im wesentlichen in Java entwickelt werden. Android stellt bereits eine Java-Schnittstelle zur Grafik-Library
     OpenCV. Je nach eingesetztem Smartphone ist es dadurch möglich, einfach und schnell, Bildverarbeitung auf der GPU auszuführen.
 
@@ -31,23 +28,51 @@
         \item Erkennen von Schildern.
         \item Erkannte Schilder klassifizieren.
         \item Klassifiziertes Schild anzeigen.
-        \item Ggf. Fahrer akustisch über Geschwindigkeitsübertretung warnen.
+        \item Ggf. Fahrer akustisch und/oder visuell über Geschwindigkeitsübertretung warnen.
     \end{itemize}
+    \begin{figure}
+            \centering
+            \includegraphics[width=0.75\textwidth]{pipeline.pdf}
+            \caption{Pipeline}
+    \end{figure}
 \subsection*{Algorithmen}
+    Der Kern der Anwendung kann in zwei grundlegeden Schritte eingeteilt werden:
     \begin{description}
-        \item[Schilderkennung:] Noch in Diskussion. Erste versuche, über Farbkanal und Hough-Transformation
-            Runde (Elliptische) Schilder zu erkennen waren für Schönwetter-Landschafts-Fahrten gut. Scheiterten
-            aber falls das Bild eingetrübt ist (z.B. durch Regen, Dämmerung).
-        \item[Schilder-Klassifizierung:] Neuronale Netze (Trainingsdaten von: \url{http://benchmark.ini.rub.de/index.php?section=home&subsection=news})
+        \item[Schilderkennung (Traffic Sign Detection):]
+            Die Aufgabe der \emph{Traffic Sign Detection} ist es in einem Bild Schilder zu erkennen.
+            Die relevanten Bildausschnitte werden extrahiert und an den \emph{Traffic Sign Recognition}
+            Algorithmus übergeben.
+
+            Da dies in Echtzeit auf einem Smartphone geschehen soll, müssen die verwendetetn Verfahren
+            möglichst schnell sein.
+            
+            Erste versuche, über Farbkanal und Hough-Transformation Runde (Elliptische) Schilder zu 
+            erkennen funktionierten für Schönwetter-Landschafts-Fahrten gut.
+            Scheiterten aber falls das Bild eingetrübt ist (z.B. durch Regen, Dämmerung).
+
+        \item[Schilder-Klassifizierung (Traffic Sign Recognition):]
+            Die Klassifizierung der Schilder geschieht über Neuronale Netze.
+            Auf \url{http://benchmark.ini.rub.de} werden Trainingsdaten bereitgestellt.
     \end{description}
 \subsection*{Meilensteine}
+    Die folgenden Punkte stellen wichtige Schritte zur Abwicklung des Projekts dar. In Klammer
+    steht dahinter der dafür zuständige Entwickler.
 	\begin{itemize}
-        \item Prototype \hfill (Luis/David)
-        \begin{itemize}
-            \item Implementierung der Algorithmen in Matlab - Traffic Sign Detection. \hfill (Luis)
-            \item Implementierung der Algorithmen in Matlab  - Traffic Sign Recognition. \hfill (David)
-        \end{itemize}
-        \item Validierung der Prototypen mittels Training und Testdaten von \url{http://benchmark.ini.rub.de/?section=home&subsection=news} \hfill (Luis/David)
-	    \item Implementierung der API in Java (evtl. Abhängigkeit zur OpenCV API). \hfill (Luis/David)
-        \item Userinterface und Frame-Grabber für Android. \hfill (Luis+David)
+        \item Prototypen Entwicklung:
+        \begin{description}
+            \item[Traffic Sign Detection:] Implementierung der Algorithmen in Matlab. \hfill (Luis)
+            \item[Traffic Sign Recognition:] Implementierung der Algorithmen in Matlab. \hfill (David)
+        \end{description}
+        \item Validierung der Prototypen:
+        \begin{description}
+            \item[Traffic Sign Detection:] Funktionstest und Tuning. \hfill (Luis)
+            \item[Traffic Sign Recognition:] Training und Funktionstest. \hfill (David)
+        \end{description}
+        Für das Training und den Funktionstest kann das Datenset von \url{http://benchmark.ini.rub.de} verwendet werden
+	    \item Implementierung:
+        \begin{description}
+            \item[Traffic Sign Detection:] Implementierung in Java (evtl. Abhängigkeit zur OpenCV API). \hfill (Luis)
+            \item[Traffic Sign Recognition:] Implementierung in Java. \hfill (David)
+        \end{description}
+        \item User-Interface und Frame-Grabber für Android. \hfill (Luis+David)
 	\end{itemize}
