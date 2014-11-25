@@ -32,10 +32,10 @@ for i = 1:length(C{1})
 end
 
 trainCascadeObjectDetector('circleSignDetector.xml', data.circle, negativeFolder);
-trainCascadeObjectDetector('triangleSignDetector.xml', data.circle, negativeFolder);
-trainCascadeObjectDetector('rhombusSignDetector.xml', data.circle, negativeFolder);
-trainCascadeObjectDetector('triangle180SignDetector.xml', data.circle, negativeFolder);
-trainCascadeObjectDetector('octagonSignDetector.xml', data.circle, negativeFolder);
+trainCascadeObjectDetector('triangleSignDetector.xml', data.triangle, negativeFolder);
+trainCascadeObjectDetector('rhombusSignDetector.xml', data.rhombus, negativeFolder);
+trainCascadeObjectDetector('triangle180SignDetector.xml', data.triangle180, negativeFolder);
+trainCascadeObjectDetector('octagonSignDetector.xml', data.octagon, negativeFolder);
 
 data.circleSignDetector = vision.CascadeObjectDetector('circleSignDetector.xml');
 data.triangleSignDetector = vision.CascadeObjectDetector('triangleSignDetector.xml');
